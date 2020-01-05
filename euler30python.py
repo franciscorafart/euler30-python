@@ -1,3 +1,4 @@
+import functools
 #List with all the characters of a string
 def map_string(s):
     res = list()
@@ -7,8 +8,8 @@ def map_string(s):
 
 #returns the sum of all the digits of x to the power of y
 def mult_n_pow(x,y):
-    pows = map(lambda ch: int(ch)**int(y),map_string(x))
-    reduced = reduce(lambda r,s: r+s, pows)
+    pows = [ int(ch)**int(y) for ch in map_string(x) ]
+    reduced = functools.reduce(lambda r,s: r+s, pows)
 
     return str(reduced)
 
@@ -33,9 +34,9 @@ def add_two(x,y):
 
 #evaluation
 def evaluate(upper_bound, power_of):
-    filtered = filter(lambda x: is_pow(x,power_of),range_list(upper_bound))
-    added = reduce(lambda a,b: add_two(a,b),filtered)
+    filtered = [ x for x in range_list(upper_bound) if is_pow(x,power_of) ]
+    added = functools.reduce(lambda a,b: add_two(a,b),filtered)
 
     return added
 
-print 'added: {}'.format(evaluate(999999, 5))
+print("added: {}".format(evaluate(999999, 5)))
